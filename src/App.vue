@@ -4,17 +4,37 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
     <router-view></router-view>
+
+    <p>Number of click: {{ count }}</p>
+    <p>Number of double click: {{ double }}</p>
+    <button @click="increment">Click to increment</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App',
+  name: "App",
   components: {
     // HelloWorld,
+  },
+  computed: {
+    count() {
+      return this.$store.state.count;
+    },
+    double() {
+      return this.$store.getters.double;
+    },
+  },
+  mounted() {
+    console.log(this.$store)
+  },
+  methods: {
+  increment() {
+    this.$store.commit('increment')
+    console.log(this.$store.state.count)
   }
-  
 }
+};
 </script>
 
 <style>

@@ -27,7 +27,7 @@
             required
             @blur="validate()"
           ></b-form-input>
-          <div class="!default" v-if="errors.name">
+          <div class="feeback" v-if="errors.name">
             {{ errors.name }}
           </div>
         </b-form-group>
@@ -38,7 +38,7 @@
             min="0"
             @blur="validate()"
           ></b-form-input>
-          <div class="!default" v-if="errors.price">
+          <div class="feeback" v-if="errors.price">
             {{ errors.price }}
           </div>
         </b-form-group>
@@ -145,12 +145,17 @@ export default {
           price: "",
           desc: "",
         }),
-          // Prevent modal from closing
-          bvModalEvent.preventDefault();
         // Trigger submit handler
         this.handleSubmit();
+        // Prevent modal from closing
+        bvModalEvent.preventDefault();
       }
     },
   },
 };
 </script>
+<style scoped>
+.feeback{
+  color: #dc3545
+}
+</style>
