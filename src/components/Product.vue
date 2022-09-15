@@ -11,16 +11,36 @@
       </ul>
     </div> -->
 
-    <b-modal id="modal-prevent-closing" ref="modal" title="Submit Your Name" @show="resetModal" @hidden="resetModal"
-      @ok="handleOk">
-      <form ref="form" @submit.stop.prevent="handleSubmit">
+    <b-modal
+      id="modal-prevent-closing"
+      ref="modal"
+      title="Submit Your Name"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+    >
+      <form ref="form" @submit.prevent="handleSubmit">
         <b-form-group label="Name">
-          <b-form-input v-model="students.name" v-bind:class="{'is-valid': errors.name}" required></b-form-input>
-          <div class="!default" @blur="validate()" v-if="errors.name">{{errors.name}}</div>
+          <b-form-input
+            v-model="students.name"
+            v-bind:class="{ 'is-valid': errors.name }"
+            required
+            @blur="validate()"
+          ></b-form-input>
+          <div class="!default" v-if="errors.name">
+            {{ errors.name }}
+          </div>
         </b-form-group>
         <b-form-group label="Price">
-          <b-form-input v-model="students.price" required min="0"></b-form-input>
-
+          <b-form-input
+            v-model="students.price"
+            required
+            min="0"
+            @blur="validate()"
+          ></b-form-input>
+          <div class="!default" v-if="errors.price">
+            {{ errors.price }}
+          </div>
         </b-form-group>
         <b-form-group label="Desc">
           <b-form-input v-model="students.desc"></b-form-input>
@@ -35,10 +55,10 @@ export default {
   props: {
     edit: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
-  name: 'ProductView',
+  name: "ProductView",
 
   data() {
     return {
@@ -53,21 +73,17 @@ export default {
         desc: "",
       },
 
-      name: '',
+      name: "",
       nameState: null,
       submittedNames: [],
-
-    }
-
+    };
   },
   watch: {
     edit() {
       if (this.edit) {
-        this.students = Object.assign({}, this.edit)
+        this.students = Object.assign({}, this.edit);
       } else {
-        this.students = {
-
-        }
+        this.students = {};
       }
     },
     // name(value) {
@@ -84,52 +100,57 @@ export default {
     // },
     validate() {
       this.errors = {
-        name: '',
-        price: '',
-        desc: ''
-      }
+        name: "",
+        price: "",
+        desc: "",
+      };
       if (!this.students.name) {
-        this.errors.name = 'products name is not null'
-        console.log("abc ", this.errors.name)
+        this.errors.name = "product name is not null";
+        return false;
       }
+      if (!this.students.price) {
+        this.errors.price = "product price is not null";
+        return false;
+      }
+
+      return true;
     },
     // save() {
     //   this.validate()
     //   console.log("abc ", this.validate())
     // },
     resetModal() {
-      this.name = ''
-      this.nameState = null
+      this.name = "";
+      this.nameState = null;
     },
-
     handleSubmit() {
       // Exit when the form isn't valid
-      if (!this.validate()) {
-        // console.log("abc ", this.validate())
-        return
-      }
       // Push the name to submitted names
-      this.submittedNames.push(this.name)
+      this.submittedNames.push(this.name);
+
       // Hide the modal manually
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-prevent-closing')
-      })
+        this.$bvModal.hide("modal-prevent-closing");
+      });
     },
     handleOk(bvModalEvent) {
-
-      console.log(this.students)
-      this.$emit("save", this.students)
-      this.students = {
-        id: '',
-        name: "",
-        price: "",
-        desc: ""
-      },
-        // Prevent modal from closing
-        bvModalEvent.preventDefault()
-      // Trigger submit handler
-      this.handleSubmit()
+      console.log(this.validate());
+      if (this.validate() === false) {
+        return;
+      } else {
+        this.$emit("save", this.students);
+        (this.students = {
+          id: "",
+          name: "",
+          price: "",
+          desc: "",
+        }),
+          // Prevent modal from closing
+          bvModalEvent.preventDefault();
+        // Trigger submit handler
+        this.handleSubmit();
+      }
     },
-  }
-}
+  },
+};
 </script>

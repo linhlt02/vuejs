@@ -10,14 +10,8 @@ Vue.use(IconsPlugin)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import routes from './router/index'
-
-// const app = Vue.createApp({})
-// Make sure to _use_ the router instance to make the
-// whole app router-aware.
-// app.use(router)
-
+import router from './router/index'
 new Vue({
-  routes,
+  router,
   render: h => h(App),
 }).$mount('#app')
