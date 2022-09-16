@@ -7,7 +7,7 @@
 
     <p>Number of click: {{ count }}</p>
     <p>Number of double click: {{ double }}</p>
-    <button @click="increment">Click to increment</button>
+    <button @click="increment" class="btn-info">Click to increment</button>
   </div>
 </template>
 
@@ -45,5 +45,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.btn-info{
+  background-color: green;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 0.25rem;
+
 }
 </style>

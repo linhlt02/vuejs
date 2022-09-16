@@ -20,10 +20,16 @@
           <td>{{ item.price }}</td>
           <td>{{ item.desc }}</td>
           <td>
-            <button v-b-modal.modal-prevent-closing @click="clickEdit(item)">
+            <button
+              v-b-modal.modal-prevent-closing
+              class="btn-primary"
+              @click="clickEdit(item)"
+            >
               Edit
             </button>
-            <button @click="clickDelete(index)">Delete</button>
+            <button @click="clickDelete(index)" class="btn-danger">
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
@@ -50,12 +56,17 @@ export default {
       let index = this.list.findIndex((c) => c.id === item.id);
       if (index >= 0) {
         this.list.splice(index, 1, item);
+        // console.log("delete")
       } else {
+        alert("Add product susses");
         this.list.push(item);
+        // console.log("adđ")
       }
       return;
     },
     clickDelete(index) {
+      alert("Delete product susses");
+
       this.list.splice(index, 1);
     },
     clickEdit(itemEdit) {
@@ -77,4 +88,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.btn-primary {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 0.25rem;
+  margin-right: 10px;
+}
+.btn-danger {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 0.25rem;
+}
 </style>
